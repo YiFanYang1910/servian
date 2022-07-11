@@ -24,10 +24,12 @@ pipeline {
 
         stage('Pushing to ECR') {
             steps {
+                withAWS(credentials: 'AWS james Full'){
                 dir('./'){
                     sh 'docker tag servian/techchallengeapp:latest 219392032829.dkr.ecr.ap-southeast-2.amazonaws.com/servian/techchallengeapp:latest'
                     sh 'docker push 219392032829.dkr.ecr.ap-southeast-2.amazonaws.com/servian/techchallengeapp:latest'
-                }  
+                    }  
+                }
             }
         }
 
