@@ -32,19 +32,22 @@ pipeline {
                     }  
                 }
             }
+         }
+       }
+    post {
+        always{
+            cleanWs()
         }
 
-        stage('Deploy') {
-            steps{
-                dir('.'){
-                        script {
-                            sh 'chmod +x -R /var/lib/jenkins/workspace/servian/script.sh'
-                            sh './script.sh'
-                            }
-                    }     
-                }
-        }    
+        success {
+            emailext body: 'Backend deploy success', subject: 'Backend success', to: 'ffls712@hotmail.com'
+        }
 
+        failure {
+            emailext body: 'Backend deploy failed', subject: 'Backend failed', to: 'ffls712@hotmail.com', attachLog: true
+        }
     }
 
 }
+
+       
